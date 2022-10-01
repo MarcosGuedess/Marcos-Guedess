@@ -1,0 +1,98 @@
+-- criação do banco de dados para o cenário de E-commerce
+create database ecommerce;
+use ecommerce;
+
+-- criando tabela Cliente
+create table clients(
+	idClient int auto_increment primary key,
+    Fname varchar(15),
+    Minit char(3),
+    Lname varchar(20),
+    CPF char(11) not null,
+    Address varchar(30),
+    constraint unique_cpf_client unique(CPF)
+);
+-- criando tabela Produto
+-- Size = dimensão do produto 
+create table product(
+	idClient int auto_increment primary key,
+    Pname varchar(15),
+    classification_kids bool default false,
+    category enum('Eletrônico', 'Brinquedos','Vestimenta','Alimentos','Moveis','Livros') not null,
+    avaliacao float default 0,
+    size varchar(10)
+);
+
+-- criando tabela Pedido
+create table request(
+	idRequest int auto_increment primary key,
+    idRequestClient int,
+    requestStatus enum('Cancelado','Confirmado','Em Processamento', 'Entregue') default 'Em Processamento' not null,
+    requestDescription varchar(255),
+    sandValue float default 10,
+    paymentCash bool default 0,
+    constraint fk_request_client foreign key (idRequestClient) references clients(idClient)
+);
+-- tabela de estoque de produto
+create table productStorage(
+	idProdutStorage int auto_increment primary key,
+    storegeLocation  varchar(255),
+    quantify int default 0
+    
+);
+-- tabela de fonecedor
+create table supplier(
+	idSupplier int auto_increment not null primary key,
+    socialName varchar(45) not null,
+    cnpj varchar(15) not null,
+    contact varchar(11) not null,
+    constraint unique_supplier unique(cnpj)
+);
+-- tabela vendedor
+create table seller(
+	idSeller int auto_increment not null primary key,
+    socialName varchar(45) not null,
+    abstName varchar(255),
+    location varchar(255),
+    cnpj varchar(15),
+    cpf char(9),
+    contact varchar(11) not null,
+    constraint unique_seller_cnpj unique(cnpj),
+    constraint unique_seller_cpf unique(cpf)
+);
+-- produtos vendedor
+create table productSeller(
+	idPSeller int,
+    idPProduct int, 
+    pQuantity int default 1,
+    primary key (idPSeller, idProduct),
+    constraint fk_product_seller foreign key (idSeller) references request(idRequest),
+    constraint fk_product_product foreign key (idProduct) references product(idProduct)
+);
+
+-- produtos pedido
+create table productRequest(
+	idPRequestProduct int,
+    idPRequest int,
+    prQuantity int default 1,
+    primary key(idPRequestProduct,idPRequest),
+    prStatus enum('Disponível','Sem Estoque') default 'Disponível',
+	constraint fk_product_seller foreign key (idPRequestProduct) references(idProduct),
+    constraint fk_product_product foreign key (idPRequest) references request(idRequest)
+);
+
+create table storegeLocation(
+	idLproduct int,
+    idLstorage int,
+    location varchar(255) not null,
+    primary key (idLproduct,idLstorage),
+    constraint fk_product_seller foreign key(idLproduct) references product(idProduct),
+    constraint fk_product_seller foreign key(idLstorage) references request(idRequest)
+);
+
+
+
+
+
+
+
