@@ -11,15 +11,20 @@
 - Criando e Clonando Repositórios
  - git init
  - git clone 'link github' 
-- Salvando Alterações no Reposítório Local.
+## Salvando Alterações no Reposítório Local.
  - git add .Nome_Arquivo
-- Desfazendo alteraçõoes com o Repositório Remoto.
+## Desfazendo alteraçõoes com o Repositório Remoto.
  - git restore <file>
-- Enviando e Baixando Alterações Com o repositório Remoto.
+ - git reset
+## Enviando e Baixando Alterações Com o repositório Remoto.
  - git push
  - git pull
-- Trabalhando com Branches - Comandos Uteis dia-dia.
+## Trabalhando com Branches - Comandos Uteis dia-dia.
  - git checkout <nome_branch>
  - git log
  - git diff
  - git status
+
+
+ ## Link para o certificado
+ - https://www.dio.me/certificate/F5BD61B2/share
